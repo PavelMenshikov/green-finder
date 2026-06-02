@@ -27,7 +27,7 @@ to detect parks, water bodies, and walking paths within a configurable walking r
   <img src="https://img.shields.io/badge/▶_Live_Demo-Streamlit_Cloud-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" alt="Live Demo">
 </a>
 
-> Попробовать приложение вживую — введи любой адрес и найди зелёные зоны рядом.
+> Try the live app — enter any address and find green zones nearby.
 
 ## Features
 
