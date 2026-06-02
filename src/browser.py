@@ -5,7 +5,6 @@ import sys
 from pathlib import Path
 from typing import Optional
 import random
-import shutil
 
 if sys.platform == "win32":
     asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
@@ -24,20 +23,24 @@ USER_AGENTS = [
 
 def _ensure_browsers():
     browsers_path = Path.home() / ".cache" / "ms-playwright"
+    browsers_path.mkdir(parents=True, exist_ok=True)
+    os.environ["PLAYWRIGHT_BROWSERS_PATH"] = str(browsers_path)
     has_chromium = (
-        browsers_path.exists()
-        and any("chromium" in d.name for d in browsers_path.iterdir() if d.is_dir())
+        any("chromium" in d.name for d in browsers_path.iterdir() if d.is_dir())
+        if browsers_path.exists()
+        else False
     )
     if not has_chromium:
-        subprocess.check_call(
-            [sys.executable, "-m", "playwright", "install", "--with-deps", "chromium"],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-        )
-    os.environ.setdefault("PLAYWRIGHT_BROWSERS_PATH", str(browsers_path))
-
-
-_ensure_browsers()
+        try:
+            subprocess.run(
+                [sys.executable, "-m", "playwright", "install", "chromium"],
+                timeout=180,
+                check=True,
+            )
+        except subprocess.CalledProcessError as e:
+            print(f"[green-finder] playwright install failed (rc={e.returncode}): {e}", file=sys.stderr)
+        except Exception as e:
+            print(f"[green-finder] playwright install error: {e}", file=sys.stderr)
 
 
 class BrowserManager:
@@ -46,6 +49,7 @@ class BrowserManager:
         self._browser: Optional[Browser] = None
 
     def start(self):
+        _ensure_browsers()
         self._playwright = sync_playwright().start()
         self._browser = self._playwright.chromium.launch(
             headless=settings.headless,
