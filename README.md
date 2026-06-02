@@ -4,19 +4,14 @@
 
 **Find walking-distance parks, ponds & alleys near any address — via browser automation + computer vision.**
 
-[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=fff)](https://python.org)
-[![Streamlit](https://img.shields.io/badge/Streamlit-1.31-FF4B4B?logo=streamlit&logoColor=fff)](https://streamlit.io)
-[![Playwright](https://img.shields.io/badge/Playwright-1.58-45BA4B?logo=playwright&logoColor=fff)](https://playwright.dev)
-[![OpenCV](https://img.shields.io/badge/OpenCV-4.9-5C3EE8?logo=opencv&logoColor=fff)](https://opencv.org)
-[![Open In Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://green-finder-kmxmwomrjql8ddbqfuvwbr.streamlit.app)
-[![Streamlit](https://img.shields.io/badge/Streamlit-1.31-FF4B4B?logo=streamlit&logoColor=fff)](https://streamlit.io)
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=fff)](https://python.org)
 [![Playwright](https://img.shields.io/badge/Playwright-1.58-45BA4B?logo=playwright&logoColor=fff)](https://playwright.dev)
 [![OpenCV](https://img.shields.io/badge/OpenCV-4.9-5C3EE8?logo=opencv&logoColor=fff)](https://opencv.org)
 [![Pydantic](https://img.shields.io/badge/Pydantic-2.7-E92063?logo=pydantic&logoColor=fff)](https://docs.pydantic.dev)
 [![SQLite](https://img.shields.io/badge/SQLite-003B57?logo=sqlite&logoColor=fff)](https://sqlite.org)
 [![License](https://img.shields.io/badge/License-MIT-f39f37)](#)
 
-[Features](#features) • [Demo](#demo) • [Quick start](#quick-start) • [Configuration](#configuration) • [Deploy](#deploy)
+[Features](#features) • [Live demo](#live-demo) • [Quick start](#quick-start) • [Configuration](#configuration) • [Deploy](#deploy)
 
 ---
 
@@ -25,6 +20,14 @@
 **Motivation:** Yandex Maps doesn't expose green zone data via a public API.
 This tool uses **Playwright** to open the map, takes a **screenshot**, and applies **OpenCV** color segmentation
 to detect parks, water bodies, and walking paths within a configurable walking radius.
+
+## Live demo
+
+<a href="https://green-finder-kmxmwomrjql8ddbqfuvwbr.streamlit.app">
+  <img src="https://img.shields.io/badge/▶_Live_Demo-Streamlit_Cloud-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" alt="Live Demo">
+</a>
+
+> Попробовать приложение вживую — введи любой адрес и найди зелёные зоны рядом.
 
 ## Features
 
