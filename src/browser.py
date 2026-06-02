@@ -1,13 +1,18 @@
 import asyncio
+import os
+import subprocess
 import sys
+from pathlib import Path
+from typing import Optional
+import random
+import shutil
+
 if sys.platform == "win32":
     asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
 
 from playwright.sync_api import sync_playwright, Page, Browser
+
 from src.config import settings
-from pathlib import Path
-import random
-from typing import Optional
 
 
 USER_AGENTS = [
@@ -15,6 +20,24 @@ USER_AGENTS = [
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
 ]
+
+
+def _ensure_browsers():
+    browsers_path = Path.home() / ".cache" / "ms-playwright"
+    has_chromium = (
+        browsers_path.exists()
+        and any("chromium" in d.name for d in browsers_path.iterdir() if d.is_dir())
+    )
+    if not has_chromium:
+        subprocess.check_call(
+            [sys.executable, "-m", "playwright", "install", "--with-deps", "chromium"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+    os.environ.setdefault("PLAYWRIGHT_BROWSERS_PATH", str(browsers_path))
+
+
+_ensure_browsers()
 
 
 class BrowserManager:
@@ -33,6 +56,8 @@ class BrowserManager:
                 "--disable-blink-features=AutomationControlled",
                 "--disable-web-security",
                 "--no-sandbox",
+                "--disable-gpu",
+                "--disable-dev-shm-usage",
             ],
         )
         return self

@@ -4,7 +4,7 @@ from typing import Optional
 
 
 class Settings(BaseSettings):
-    headless: bool = False
+    headless: bool = True
     viewport_width: int = 1920
     viewport_height: int = 1080
     slow_mo: int = 100
